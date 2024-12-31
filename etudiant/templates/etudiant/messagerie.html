@@ -1,0 +1,65 @@
+{% extends "etudiant/layout.html" %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center my-5">Messagerie</h2>
+        <hr>
+        
+        <div class="d-flex justify-content-between mb-4">
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'accueil' %}">Page d'accueil</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'reclamation' id=user_id %}">Réclamation</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'message' id=user_id %}">Écrire à l'administration</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'logOut' %}">Déconnecter</a>
+        </div>
+
+        {% if success_message %}
+            <div class="alert alert-success">{{ success_message }}</div>
+        {% endif %}
+
+        <div>
+            <h3 class="mt-5">Réclamations</h3>
+            <ul class="list-group">
+                {% for reclamation in reclamations %}
+                    <li class="list-group-item">
+                        <strong>{{ reclamation.date_de_soumission }} - {{ reclamation.statut }}</strong>
+                        <p>{{ reclamation.message }}</p>
+                        {% if reclamation.reponse %}
+                            <p><strong>Réponse :</strong> {{ reclamation.reponse }}</p>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">Aucune réclamation.</li>
+                {% endfor %}
+            </ul>
+
+            <h3 class="mt-5">Messages</h3>
+            <ul class="list-group">
+                {% for message in messages %}
+                    <li class="list-group-item">
+                        <strong>{{ message.date_envoie }} - {{ message.sujet }}</strong>
+                        <p>{{ message.contenu }}</p>
+                        {% if message.reponse %}
+                            <p><strong>Réponse :</strong> {{ message.reponse }}</p>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">Aucun message.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    {% block script %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const alertMessage = document.querySelectorAll('.alert');
+                alertMessage.forEach(function(alert) {
+                    setTimeout(function() {
+                        alert.style.opacity = 0;
+                        alert.style.transition = "opacity 0.5s ease-out";
+                    }, 5000);
+                });
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "etudiant/layout.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Compléter votre Profil</h1>
+    
+    {% if success %}
+        <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    
+    <form method="post" action="{% url 'ajouter' id=user_id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="numero_carte">Numéro matricule</label>
+                <input type="text" name="numero_carte" class="form-control" value="{{ etudiant.matricule|default_if_none:'' }}" {% if readonly %}readonly{% endif %}>
+            </div>
+            <div class="col-md-6">
+                <label for="nom">Nom</label>
+                <input type="text" name="nom" class="form-control" value="{{ etudiant.nom|default_if_none:'' }}" {% if readonly %}readonly{% endif %}>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="prenom">Prénom</label>
+                <input type="text" name="prenom" class="form-control" value="{{ etudiant.prenom|default_if_none:'' }}" {% if readonly %}readonly{% endif %}>
+            </div>
+            <div class="col-md-6">
+                <label for="date_naissance">Date de Naissance</label>
+                <input type="date" name="date_naissance" class="form-control" value="{{ etudiant.date_de_naissance|date:'Y-m-d' }}" {% if readonly %}readonly{% endif %}>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="lieu_naissance">Lieu de Naissance</label>
+                <input type="text" name="lieu_naissance" class="form-control" value="{{ etudiant.lieu_de_naissance|default_if_none:'' }}" {% if readonly %}readonly{% endif %}>
+            </div>
+            <div class="col-md-6">
+                <label for="departement">Département</label>
+                <select name="departement" class="form-control" {% if readonly %}disabled{% endif %}>
+                    {% for departement in departements %}
+                        <option value="{{ departement.id }}" {% if etudiant and etudiant.departement.id == departement.id %}selected{% endif %}>
+                            {{ departement.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="filiere">Filière</label>
+                <select name="filiere" class="form-control" {% if readonly %}disabled{% endif %}>
+                    {% for filiere in filieres %}
+                        <option value="{{ filiere.id }}" {% if etudiant and etudiant.filiere.id == filiere.id %}selected{% endif %}>
+                            {{ filiere.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="niveau">Niveau</label>
+                <select name="niveau" class="form-control" {% if readonly %}disabled{% endif %}>
+                    {% for niveau in niveaux %}
+                        <option value="{{ niveau.id }}" {% if etudiant and etudiant.niveau_de_classe.id == niveau.id %}selected{% endif %}>
+                            {{ niveau.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label for="carte_etudiant">Carte Étudiant</label>
+                <input type="file" name="carte_etudiant" class="form-control" {% if readonly %}disabled{% endif %}>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" {% if readonly %}disabled{% endif %}>Enregistrer</button>
+    </form>
+</div>
+{% endblock %}

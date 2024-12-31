@@ -1,0 +1,10 @@
+{% autoescape off %}
+Bonjour {{ nom }} {{ prenom }},
+
+Merci de vous être inscrit sur notre plateforme ENETP. Veuillez confirmer votre adress mail en cliquant sur le lien ci-dessous :
+
+Lien : http://{{ domain }}{% url 'active' uidb64=uidb64 tokens=tokens %}
+
+Cordialement,
+L'équipe ENETP
+{% endautoescape %}

@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>{% block title %}Enetp{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'etudiant/styles.css' %}">
+    {% block script %}
+    {% endblock %}
+    
+    <!-- CSS personnalisé -->
+    <style>
+        /* Général */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+        }
+
+        h1, h3 {
+            color: #2c3e50;
+        }
+
+        .nav-link {
+            font-weight: bold;
+            color: #2c3e50 !important;
+        }
+
+        .nav-link:hover {
+            color: #3498db !important;
+        }
+
+        /* Annonces */
+        .list-group-item {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .list-group-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .list-group-item h5 {
+            font-size: 1.2rem;
+            color: #2980b9;
+        }
+
+        /* Boutons */
+        .btn-link {
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Alertes */
+        .alert {
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .alert-warning {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .alert-success {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .alert-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        /* Nav */
+        .nav {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% block body %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+{% extends "etudiant/layout.html" %}
+{% block body %}
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'logIn' %}">LOGIN</a></li>
+                <li><a href="{% url 'regIster' %}">Register</a></li>
+                <li><a href="#aboutUs">À propos de nous</a></li>
+                <li><a href="#contactUs">Contact</a></li>
+                <li><a href="#filieres">Filières</a></li>
+            </ul>
+        </nav>
+        <img src="https://dg-enseignementsup.ml/wp-content/uploads/2019/02/LogoENETP.jpg" alt="Logo ENETP" id="logo">
+    </header>
+
+    <main>
+        <section id="aboutUs">
+            <h2>À propos de nous</h2>
+            <p>Bienvenue à l'ENETP (École Nationale d'Enseignement Technique et Professionnel), une grande école située à Kabbalah, Mali. L'ENETP est un établissement d'enseignement supérieur reconnu pour son excellence dans la formation des enseignants et des chercheurs dans divers domaines techniques et professionnels.</p>
+            <p>Notre objectif est de former des étudiants compétents qui contribueront à l'essor du secteur éducatif et technique du pays. Nous proposons des formations en **FITID** (Formation Initiale et Technique en Informatique et Développement) et **LUTZ** (Langues, Université et Technologies). Notre institution est une référence dans l'accompagnement des étudiants vers une carrière réussie.</p>
+            <p>Notre campus est situé au cœur de la ville universitaire de Kabbalah, un environnement propice à l'épanouissement académique et professionnel. À l'ENETP, chaque étudiant bénéficie d'une formation de qualité dispensée par des enseignants expérimentés et passionnés.</p>
+        </section>
+        <section id="contactUs">
+            <h2>Comment nous contacter</h2>
+            <p>Téléphone: <strong>20 22 33 33</strong></p>
+            <p>Adresse: Campus universitaire de Kabbalah, Mali</p>
+            <p>Email: <a href="mailto:info@enetp.ml">info@enetp.ml</a></p>
+            <p>Heures d'ouverture: Du lundi au vendredi, de 8h00 à 17h00</p>
+        </section>
+
+        <section id="filieres">
+            <h2>Nos Filières</h2>
+            <p>Nous proposons plusieurs filières adaptées aux besoins actuels du marché du travail et à l'évolution rapide des technologies :</p>
+            <ul>
+                <li><strong>FITID (Formation Initiale et Technique en Informatique et Développement)</strong> : Cette filière est dédiée aux étudiants souhaitant devenir des experts en informatique, développement web et technologies émergentes.</li>
+                <li><strong>LUTZ (Langues, Université et Technologies)</strong> : Cette filière est conçue pour former des professionnels dans le domaine des langues et des technologies, en mettant l'accent sur l'intégration des nouvelles technologies dans l'enseignement des langues.</li>
+                <li><strong>Autres filières</strong> : Nous proposons également des formations en management, gestion de projet, et développement durable. Notre programme évolue pour répondre aux besoins spécifiques des étudiants et des entreprises.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 ENETP - Tous droits réservés</p>
+        <p>Site web conçu pour améliorer l'accessibilité et l'interaction avec nos étudiants.</p>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(function(section) {
+                if (isInViewport(section)) {
+                    section.classList.add('visible');
+                }
+            });
+        });
+
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top >= 0 && rect.bottom <= window.innerHeight;
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px;
+            color: white;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #logo {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+
+        @media (max-width: 600px) {
+            nav ul li {
+                display: block;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "etudiant/layout.html" %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            Réinitialisation de Mot de Passe
+        </div>
+        <div class="card-body">
+            {% if message %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
+            {% for message in messages %}
+                <div class="alert alert-info">{{ message }}</div>
+            {% endfor %}
+            
+            <h2>Entrez votre adresse email</h2>
+            <p>Nous vous enverrons un lien pour réinitialiser votre mot de passe.</p>
+            
+            <form action="{% url 'forGet' %}" method="POST" id="emailForm">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Adresse Email</label>
+                    <input class="form-control" type="email" name="email" id="email" placeholder="Entrez votre adresse email" required>
+                </div>
+
+                <button type="submit" class="btn btn-info" id="submitButton">Réinitialiser</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('emailForm');
+            const emailInput = document.getElementById('email');
+            const submitButton = document.getElementById('submitButton');
+            
+            form.addEventListener('submit', function(event) {
+                const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    event.preventDefault();
+                    alert("Veuillez entrer une adresse email valide.");
+                    return;
+                }
+                submitButton.disabled = true;
+            });
+        });
+    </script>
+{% endblock %}
+{% endblock %}

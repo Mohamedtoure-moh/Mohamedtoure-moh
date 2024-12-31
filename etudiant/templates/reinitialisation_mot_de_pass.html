@@ -1,0 +1,14 @@
+{% autoescape off %}
+
+Bonjour {{ nom }} {{ prenom }},
+
+Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous pour le faire :
+
+Lien : http://{{ domain }}{% url 'reset' uidb64=uidb64 tokens=tokens %}
+
+Si vous n'avez pas fait cette demande, veuillez ignorer cet email.
+
+Cordialement,
+L'équipe ENETP
+
+{% endautoescape %}
