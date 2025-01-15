@@ -1,0 +1,74 @@
+{% extends "etudiant/layout.html" %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Créer un compte
+        </div>
+        <div class="card-body">
+            {% if message %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
+            <form action="{% url 'regIster' %}" method="POST" id="registerForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="nom" class="form-label">Votre Nom</label>
+                    <input class="form-control" type="text" name="nom" id="nom" placeholder="Votre Nom" required>
+                </div>
+                <div class="mb-3">
+                    <label for="prenom" class="form-label">Votre Prénom</label>
+                    <input class="form-control" type="text" name="prenom" id="prenom" placeholder="Votre Prénom" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input class="form-control" type="email" name="email" id="email" placeholder="Email Address" required>
+                </div>
+                <small class="form-text text-muted">
+                    Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.
+                </small>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de Passe</label>
+                    <input class="form-control" type="password" name="password" id="password" placeholder="Mot de Passe" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmation" class="form-label">Confirmer le Mot de Passe</label>
+                    <input class="form-control" type="password" name="confirmation" id="confirmation" placeholder="Confirmer Mot de Passe" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="submitButton">Créer</button>
+            </form>
+            <p class="mt-3">Vous avez déjà un compte? <a href="{% url 'logIn' %}">Connectez-vous</a>.</p>
+        </div>
+    </div>
+</div>
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const registerForm = document.getElementById('registerForm');
+            const passwordInput = document.getElementById('password');
+            const confirmationInput = document.getElementById('confirmation');
+            const submitButton = document.getElementById('submitButton');
+
+            registerForm.addEventListener('submit', function(event) {
+                // Validation du mot de passe
+                if (passwordInput.value !== confirmationInput.value) {
+                    event.preventDefault();
+                    alert("Les mots de passe ne correspondent pas.");
+                    return;
+                }
+
+                const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                if (!passwordRegex.test(passwordInput.value)) {
+                    event.preventDefault();
+                    alert("Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.");
+                    return;
+                }
+
+                // Si tout est valide, l'envoi du formulaire continue
+                submitButton.disabled = true; // Désactive le bouton pour éviter plusieurs soumissions
+            });
+        });
+    </script>
+{% endblock %}
+{% endblock %}

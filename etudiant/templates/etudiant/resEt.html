@@ -1,0 +1,66 @@
+{% extends "etudiant/layout.html" %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Réinitialiser votre mot de passe
+        </div>
+        <div class="card-body">
+            {% if message %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
+            {% for message in messages %}
+                <div class="alert alert-info">{{ message }}</div>
+            {% endfor %}
+            <form action="{% url 'reset' uidb64=uidb64 tokens=tokens %}" method="POST" id="resetPasswordForm">
+                {% csrf_token %}
+                
+                <small class="form-text text-muted mb-3">
+                    Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.
+                </small>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">Nouveau Mot de Passe</label>
+                    <input class="form-control" type="password" name="password" id="password" placeholder="Nouveau mot de passe" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="confirmation" class="form-label">Confirmer le Nouveau Mot de Passe</label>
+                    <input class="form-control" type="password" name="confirmation" id="confirmation" placeholder="Confirmer le mot de passe" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="submitButton">Réinitialiser</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('resetPasswordForm');
+            const passwordInput = document.getElementById('password');
+            const confirmationInput = document.getElementById('confirmation');
+            const submitButton = document.getElementById('submitButton');
+            
+            form.addEventListener('submit', function(event) {
+                if (passwordInput.value !== confirmationInput.value) {
+                    event.preventDefault();
+                    alert("Les mots de passe ne correspondent pas.");
+                    return;
+                }
+                const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                if (!passwordRegex.test(passwordInput.value)) {
+                    event.preventDefault();
+                    alert("Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.");
+                    return;
+                }
+
+                submitButton.disabled = true;
+            });
+        });
+    </script>
+{% endblock %}
+{% endblock %}
+

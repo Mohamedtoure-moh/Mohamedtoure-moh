@@ -1,0 +1,63 @@
+{% extends "etudiant/layout.html" %}
+{% load static %}
+{% block body %}
+    <div class="container my-5">
+        <h1 class="display-4 text-center">Bienvenue, {{ user.first_name }} {{ user.last_name }}!</h1>
+        
+        <nav class="my-4">
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a class="nav-link active" href="{% url 'accueil' %}">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ajouter' id=user_id %}">Compléter vos informations</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'messagerie' id=user_id %}">Ma messagerie</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logOut' %}">Déconnecter</a></li>
+            </ul>
+        </nav>
+
+        <h3 class="my-4">Annonces</h3>
+        <div class="list-group">
+            {% for annonce in annonces %}
+                <div class="list-group-item">
+                    <h5>{{ annonce.titre }}</h5>
+                    <p>{{ annonce.contenu }}</p>
+                    {% if annonce.fichier %}
+                        <a href="{{ annonce.fichier.url }}" class="btn btn-link" target="_blank">Télécharger le fichier</a>
+                    {% endif %}
+                    <p><small><strong>Publié le :</strong> {{ annonce.creer }}</small></p>
+                </div>
+            {% empty %}
+                <div class="alert alert-warning" role="alert">
+                    Aucune annonce disponible pour le moment.
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Animation de survol pour les annonces
+            const annonces = document.querySelectorAll('.list-group-item');
+            annonces.forEach(function(annonce) {
+                annonce.addEventListener('mouseenter', function() {
+                    annonce.style.backgroundColor = '#ecf0f1';
+                });
+                annonce.addEventListener('mouseleave', function() {
+                    annonce.style.backgroundColor = '#ffffff';
+                });
+            });
+
+            // Effet d'animation d'apparition des annonces
+            const allItems = document.querySelectorAll('.list-group-item');
+            allItems.forEach(function(item, index) {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+                setTimeout(function() {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = 1;
+                    item.style.transform = 'translateY(0)';
+                }, index * 100); // Décalage pour un effet d'animation progressif
+            });
+        });
+    </script>
+{% endblock %}
